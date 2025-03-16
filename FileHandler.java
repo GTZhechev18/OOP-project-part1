@@ -67,5 +67,47 @@ public class FileHandler {
             writer.close();
         }
     }
-    
+
+    // търсене дали на дата date в зала hall вече има събитие
+    Boolean SearchEvent(String date, Integer hall)
+    {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(" ");
+            String d = parts[0];
+            String event=parts[1];
+            int h = Integer.parseInt(parts[2]);
+            if (d.equals(date) && hall==h) return true;
+        
+        }
+        return false;
+    }
+
+    void AddEvent(String date, Integer hall, String event)
+    {
+        String line=date+" "+hall.toString()+" "+event; 
+        append(Constants.Events_FILE, line);
+    }
+
+    public static void main(String[] args) {
+        FileHandler fileHandler = new FileHandler();
+        
+        try {
+            // Запис в нов файл
+            fileHandler.writeToNewFile("example.txt", "Това е примерен текст.\n");
+
+            // Добавяне на нов текст в съществуващ файл
+            fileHandler.append("example.txt", "Това е добавен текст.\n");
+
+            // Отваряне на съществуващ файл за четене
+            fileHandler.openForRead("example.txt");
+            String content = fileHandler.read();
+            System.out.println("Съдържание на файла:\n" + content);
+
+            // Затваряне на файла след работа
+            fileHandler.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
