@@ -11,9 +11,6 @@ public class ReadDataFromLine {
      // String text2 = parts[3];
 
    }	   
-   public Boolean CheckEventForDate(String event)
-   {
-      
-   }
+
 
 }	

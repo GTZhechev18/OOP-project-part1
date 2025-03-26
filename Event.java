@@ -1,9 +1,18 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Event{
 
     // търсене дали на дата date в зала hall вече има събитие
-    Boolean SearchEvent(String date, Integer hall)
+    Boolean SearchEvent(String date, Integer hall) throws IOException
     {
         String line;
+        BufferedReader reader;
+        FileHandler fileHandler = new FileHandler();
+     //   fileHandler.openForRead(Constants.Halls_FILE);
+        FileReader fileReader = new FileReader(Constants.Halls_FILE);
+        reader = new BufferedReader(fileReader);
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(" ");
             String d = parts[0];
@@ -16,10 +25,11 @@ public class Event{
     }
 
     //добавяне на събитие 
-    void AddEvent(String date, Integer hall, String event)
+    void AddEvent(String date, Integer hall, String event)throws IOException
     {
-        String line=date+" "+hall.toString()+" "+event; 
-        append(Constants.Events_FILE, line);
+        FileHandler fileHandler = new FileHandler();
+        String line=date+" "+hall.toString()+" "+event;
+        fileHandler.append(Constants.Events_FILE, line);
     }
 
 }

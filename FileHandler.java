@@ -68,8 +68,20 @@ public class FileHandler {
         }
     }
 
+    public void FileSaveAs(String OldFileName, String NewFileName) throws IOException{
+        openForRead(OldFileName);
+        openForWrite(NewFileName);
+        //StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            writer.write(line+"\n");
+        }
+        reader.close();
+        writer.close();
+    }
+
     // търсене дали на дата date в зала hall вече има събитие
-    Boolean SearchEvent(String date, Integer hall)
+    Boolean SearchEvent(String date, Integer hall)throws IOException
     {
         String line;
         while ((line = reader.readLine()) != null) {
@@ -83,12 +95,14 @@ public class FileHandler {
         return false;
     }
 
-    void AddEvent(String date, Integer hall, String event)
+    void AddEvent(String date, Integer hall, String event)throws IOException
     {
         String line=date+" "+hall.toString()+" "+event; 
         append(Constants.Events_FILE, line);
     }
 
+
+/*
     public static void main(String[] args) {
         FileHandler fileHandler = new FileHandler();
         
@@ -109,5 +123,5 @@ public class FileHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
