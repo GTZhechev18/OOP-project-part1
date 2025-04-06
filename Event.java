@@ -28,7 +28,7 @@ public class Event{
     void AddEvent(String date, Integer hall, String event)throws IOException
     {
         FileHandler fileHandler = new FileHandler();
-        String line=date+" "+hall.toString()+" "+event;
+        String line=date+" "+event+" "+hall.toString()+"\n";
         fileHandler.append(Constants.Events_FILE, line);
     }
 
