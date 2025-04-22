@@ -29,10 +29,20 @@ public class Main {
             catch (IOException е) {
                 System.out.println("Грешка");}
                 break;
-            case 2: displayEventsMenu(); break;
-            case 3: displayReservationsMenu(); break;
-            case 4: displayPurchaseMenu(); break;
-            case 5: displayCheckMenu(); break;
+            case 2: try {
+                displayEventsMenu();
+            }
+            catch (IOException е) {
+                System.out.println("Грешка");}
+                break;
+            case 3: try {
+                displayReservationsMenu();
+            }
+            catch (IOException е) {
+                System.out.println("Грешка");}
+                break;
+           // case 4: displayPurchaseMenu(); break;
+            //case 5: displayCheckMenu(); break;
             //case 6: return;
         }
     }
@@ -107,7 +117,7 @@ public class Main {
         System.out.println("Опция 5. Помощ");
         System.out.println("Изход към главно ниво");
     }
-    private static void displayEventsMenu() {
+    private static void displayEventsMenu() throws IOException{
         int ch=0;
         do {
             System.out.println("Моля изберете една от следните възможности за представления");
@@ -187,14 +197,14 @@ public class Main {
         }while (ch!=7);
     }
 
-    private static void displayReservationsMenu() {
+    private static void displayReservationsMenu()throws IOException {
         int ch=0;
         do {
             System.out.println("Моля изберете една от следните възможности");
             System.out.println("1. Отваряне");
             System.out.println("2. Затваряне");
-            System.out.println("3. Запазване");
-            System.out.println("4. Запазване като");
+            System.out.println("3. Запазване като");
+            System.out.println("4. Добавяне на резервация");
             System.out.println("5. Помощ");
             System.out.println("6. Изход");
             Scanner myObj = new Scanner(System.in);
@@ -224,8 +234,7 @@ public class Main {
                         // break;
                     }
                     break;
-                case 3:
-                case 4:
+                 case 3:
                     try {
                         myObj = new Scanner(System.in);
                         System.out.print("Въведете ново име на файла:");
@@ -237,30 +246,32 @@ public class Main {
                         // break;
                     }
                     break;
-                case 5:
+                case 4:
                     try {
-                        Booking e = new Booking();
+                        Booking booking = new Booking();
                         myObj = new Scanner(System.in);
-                        System.out.print("Въведете ново име на събитие:");
-                        String newEvent = myObj.nextLine();
-                        System.out.print("Въведете дата на новото събитие:");
-                        String newDate = myObj.nextLine();
+                        System.out.print("Въведете име на събитие за резервация:");
+                        String e = myObj.nextLine();
+                        System.out.print("Въведете дата на резервацията:");
+                        String d = myObj.nextLine();
                         System.out.print("Въведете ред на новото събитие:");
-                        Integer newRow = myObj.nextInt();
+                        Integer row = myObj.nextInt();
                         System.out.print("Въведете място на новото събитие:");
-                        Integer newSeat = myObj.nextInt();
-                        if (e.SearchEvent(newDate, newRow, newSeat))
-                            System.out.println("На тази дата в тази зала вече има събитие!");
+                        Integer seat = myObj.nextInt();
+                        System.out.println("Въведете бележка за резервацията:");
+                        String note = myObj.nextLine();
+                        if (booking.SearchBooking(e,d, row, seat, note))
+                            System.out.println("Тази резервация вече е записана!");
                         else {
-                            e.AddEvent(newDate, newRow, newSeat);
-                            System.out.println("Събитието е добавено!");
+                            booking.AddBook(row, seat, d, e, note);
+                            System.out.println("Резервацията е добавена!");
                         }
                     } catch (IOException е) {
                         //e.printStackTrace();
                         System.out.println("Грешка");
                     }
                     break;
-                case 6:
+                case 5:
                     ShowHelp();
                     break;
                 default:
@@ -269,8 +280,8 @@ public class Main {
         }
             while (ch != 7) ;
         }
-}
 
+/*
 
     private static void displayPurchaseMenu() {
         System.out.println("Моля изберете една от следните възможности за покупки");
@@ -291,4 +302,6 @@ public class Main {
         System.out.println("5. Помощ");
         System.out.println("6. Изход");
     }
+
+ */
 }
