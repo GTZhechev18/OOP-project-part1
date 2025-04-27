@@ -41,8 +41,8 @@ public class Main {
             catch (IOException е) {
                 System.out.println("Грешка");}
                 break;
-           // case 4: displayPurchaseMenu(); break;
-            //case 5: displayCheckMenu(); break;
+            case 4: displayPurchaseMenu(); break;
+            case 5: displayReportMenu(); break;
             //case 6: return;
         }
     }
@@ -156,7 +156,6 @@ public class Main {
                     }
                     break;
                 case 3:
-                case 4:
                     try {
                         myObj = new Scanner(System.in);
                         System.out.print("Въведете ново име на файла:");
@@ -168,7 +167,7 @@ public class Main {
                         // break;
                     }
                     break;
-                case 5:
+                case 4:
                     try {
                         Event e = new Event();
                         myObj = new Scanner(System.in);
@@ -188,7 +187,7 @@ public class Main {
                         System.out.println("Грешка");
                          }
                     break;
-                case 6:
+                case 5:
                     ShowHelp();
                     break;
                 default:
@@ -205,8 +204,9 @@ public class Main {
             System.out.println("2. Затваряне");
             System.out.println("3. Запазване като");
             System.out.println("4. Добавяне на резервация");
-            System.out.println("5. Помощ");
-            System.out.println("6. Изход");
+            System.out.println("5. Изтриване на резервация");
+            System.out.println("6. Помощ");
+            System.out.println("7. Изход");
             Scanner myObj = new Scanner(System.in);
             ch = myObj.nextInt();
             FileHandler fileHandler = new FileHandler();
@@ -272,7 +272,32 @@ public class Main {
                     }
                     break;
                 case 5:
-                    ShowHelp();
+                    try {
+                        Booking booking = new Booking();
+                        myObj = new Scanner(System.in);
+                        System.out.print("Въведете име на събитие за резервация:");
+                        String e = myObj.nextLine();
+                        System.out.print("Въведете дата на резервацията:");
+                        String d = myObj.nextLine();
+                        System.out.print("Въведете ред на новото събитие:");
+                        Integer row = myObj.nextInt();
+                        System.out.print("Въведете място на новото събитие:");
+                        Integer seat = myObj.nextInt();
+                        System.out.println("Въведете бележка за резервацията:");
+                        String note = myObj.nextLine();
+                        //      if (booking.SearchBooking(e,d, row, seat, note))
+                        //          System.out.println("Тази резервация вече е записана!");
+                        //     else {
+                        booking.UnBook(e,row, seat, d);
+                        System.out.println("Резервацията е изтрита!");
+                        //    }
+                    } catch (IOException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+                    break;
+
+                case 6: ShowHelp();
                     break;
                 default:
                     System.out.println("Грешен избор");
@@ -281,27 +306,157 @@ public class Main {
             while (ch != 7) ;
         }
 
-/*
+
 
     private static void displayPurchaseMenu() {
-        System.out.println("Моля изберете една от следните възможности за покупки");
-        System.out.println("1. Отваряне");
-        System.out.println("2. Затваряне");
-        System.out.println("3. Запазване");
-        System.out.println("4. Запазване като");
-        System.out.println("5. Помощ");
-        System.out.println("6. Изход");
+        int ch = 0;
+        do {
+            System.out.println("Моля изберете една от следните възможности за представления");
+            System.out.println("1. Отваряне");
+            System.out.println("2. Затваряне");
+            System.out.println("3. Запазване като");
+            System.out.println("4. Добавяне на нова покупка");
+            System.out.println("5. Проверка на код");
+            System.out.println("6. Помощ");
+            System.out.println("7. Изход");
+            System.out.println("Вашият избор:");
+            Scanner myObj = new Scanner(System.in);
+            ch = myObj.nextInt();
+            FileHandler fileHandler = new FileHandler();
+
+            switch (ch){
+                case 1:
+                    try {
+                        fileHandler.openForRead(Constants.Payments_FILE);
+                        String content = fileHandler.read();
+                        System.out.println("Съдържание на файла:\n" + content);
+                    } catch (IOException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+                    break;
+                case 2:
+                    try {
+                     fileHandler.close();
+                      System.out.println("Файлът е затворен!");
+                     } catch (IOException е) {
+                    //e.printStackTrace();
+                    System.out.println("Грешка");
+                }
+                break;
+                case 3:
+                    try {
+                        myObj = new Scanner(System.in);
+                        System.out.print("Въведете ново име на файла:");
+                        String newName = myObj.nextLine();
+                        fileHandler.FileSaveAs(Constants.Payments_FILE, newName);
+                    } catch (IOException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+                    break;
+                case 4:
+                    try {
+                        Purchase p = new Purchase();
+                        myObj = new Scanner(System.in);
+                        System.out.print("Въведете име на събитие:");
+                        String newEvent = myObj.nextLine();
+                        System.out.print("Въведете дата на събитие:");
+                        String newDate = myObj.nextLine();
+                        System.out.print("Въведете ред на събитие:");
+                        Integer newRow = myObj.nextInt();
+                        System.out.print("Въведете място на събитие:");
+                        Integer newSeat = myObj.nextInt();
+
+                        p.PurchaseTicket(newEvent, newDate, newRow, newSeat);
+                        System.out.println("Билетът е закупен!");
+                    } catch (IOException е) {
+
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+                    break;
+                case 5:
+                    Purchase p=new Purchase();
+                    myObj = new Scanner(System.in);
+                    System.out.print("Въведете код за проверка:");
+                    String newCode = myObj.nextLine();
+                    if(p.CheckCode(newCode)>0) System.out.println("Кодът е валиден");
+                    else System.out.println("Кодът е невалиден");
+
+            }
+
+        }
+        while(ch!=7);
     }
 
-    private static void displayCheckMenu() {
-        System.out.println("Моля изберете една от следните възможности за справки");
-        System.out.println("1. Отваряне");
-        System.out.println("2. Затваряне");
-        System.out.println("3. Запазване");
-        System.out.println("4. Запазване като");
-        System.out.println("5. Помощ");
-        System.out.println("6. Изход");
-    }
+    private static void displayReportMenu() {
+        int ch = 0;
+        do {
+            System.out.println("Моля изберете една от следните възможности за справки");
+            System.out.println("1. Търсене на зала");
+            System.out.println("2. Справка за свободни места");
+            System.out.println("3. Справка за резервирани, но незакупени билети");
+            System.out.println("4. Справка за закупени билети в даден период");
+            System.out.println("5. Помощ");
+            System.out.println("6. Изход");
+            System.out.println("Вашият избор:");
+            Scanner myObj = new Scanner(System.in);
+            ch = myObj.nextInt();
 
- */
+            switch (ch) {
+                case 1:
+                    try{
+                    Report r=new Report();
+                    myObj = new Scanner(System.in);
+                    System.out.print("Въведете име на събитие:");
+                    String event = myObj.nextLine();
+                    System.out.print("Въведете дата на събитие:");
+                    String date = myObj.nextLine();
+                    Integer hall=r.FindHall(event, date);
+                    if (hall>-1) System.out.println("Събитието ще се проведе в зала "+hall);
+                        else System.out.println("Не е намерено такова събитие на тази дата!");
+                    break;
+                    } catch (IOException е) {
+
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+                case 2:
+                    try{
+                        Report r=new Report();
+                        myObj = new Scanner(System.in);
+                        System.out.print("Въведете име на събитие:");
+                        String event = myObj.nextLine();
+                        System.out.print("Въведете дата на събитие:");
+                        String date = myObj.nextLine();
+                        r.ReportFreeSeats(event,date);
+                        break;
+                    } catch (IOException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+                case 3:
+                    try{
+                        Booking b=new Booking();
+                        myObj = new Scanner(System.in);
+                        System.out.print("Въведете име на събитие:");
+                        String event = myObj.nextLine();
+                        System.out.print("Въведете дата на събитие:");
+                        String date = myObj.nextLine();
+                        if (date.equals("") ) b.ReportReservedUnpayedBookings(event);
+                        else if (event.equals("")) b.ReportReservedUnpayedBookings(date);
+                        else b.ReportReservedUnpayedBookings(event,date);
+
+                        break;
+                    } catch (IOException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка");
+                    }
+
+            }
+
+        } while (ch != 7) ;
+
+    }
 }

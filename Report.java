@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Report {
 
-    Integer FindHall(String event, String date) throws IOException {
+   public Integer FindHall(String event, String date) throws IOException {
 
          //намираме залата на събитие на определена дата
          FileHandler fileHandler = new FileHandler();
@@ -54,10 +54,8 @@ public class Report {
        int N = txt.length();
        int res = 0;
 
-       /* A loop to slide pat[] one by one */
        for (int i = 0; i <= N - M; i++) {
-           /* For current index i, check for
-       pattern match */
+           /* For current index i, check for pattern match */
            int j;
            for (j = 0; j < M; j++) {
                if (txt.charAt(i + j) != pat.charAt(j)) {
@@ -74,7 +72,7 @@ public class Report {
        return res;
    }
 
-    void ReportFreeSeats(String event, String date) throws IOException{
+  public void ReportFreeSeats(String event, String date) throws IOException{
 
         StringBuilder sb=new StringBuilder();
         FileHandler fileHandler = new FileHandler();

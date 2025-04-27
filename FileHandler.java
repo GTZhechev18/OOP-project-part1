@@ -80,25 +80,32 @@ public class FileHandler {
         writer.close();
     }
 
-    // търсене дали на дата date в зала hall вече има събитие
-    Boolean SearchEvent(String date, Integer hall)throws IOException
-    {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(" ");
-            String d = parts[0];
-            String event=parts[1];
-            int h = Integer.parseInt(parts[2]);
-            if (d.equals(date) && hall==h) return true;
-        
+    //преименуване на файл
+    public void FileRename(String OldName, String NewName) {
+        File file = new File(OldName);
+        File rename = new File(NewName);
+        boolean flag = file.renameTo(rename);
+
+ /*     if (flag == true) {
+            System.out.println("File Successfully Rename");
         }
-        return false;
+        // if renameTo() return false then else block is
+        // executed
+        else {
+            System.out.println("Operation Failed");
+        }*/
     }
 
-    void AddEvent(String date, Integer hall, String event)throws IOException
+    //изтриване на файл
+    public void DeleteFile (String FileName) throws IOException
     {
-        String line=date+" "+hall.toString()+" "+event; 
-        append(Constants.Events_FILE, line);
+        File myObj = new File(FileName);
+        // myObj.delete();
+        if (myObj.delete()) {
+            System.out.println("Deleted the file: " + myObj.getName());
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
     }
 
 
