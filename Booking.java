@@ -3,7 +3,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 
+/**
+ * Класът Резервации съдържа методи за добавяне, изтриване, търсене,и проверяване на резервации.
+ *
+ * @author Георги Жечев
+ * @version 1.0
+ * @since 2025-05-04
+ */
+
 public class Booking{
+
+    /**
+     * Добавя резервация.
+     *
+     * @param row съдържа резервираният ред
+     * @param seat съдържа мястото на залата
+     * @param date съдържа датата
+     * @param name съдържа името на събитието
+     * @param note съдържа бележка
+     * @return няма
+     */
 
     public void AddBook (Integer row, Integer seat, String date, String name, String note) throws IOException
     {
@@ -15,6 +34,16 @@ public class Booking{
         fileHandler.append(Constants.Bookings_FILE,line);
         fileHandler.close();
     }
+
+    /**
+     * Изтрива резервация.
+     *
+     * @param row съдържа резервираният ред
+     * @param seat съдържа мястото на залата
+     * @param date съдържа датата
+     * @param name съдържа името на събитието
+     * @return няма
+     */
 
     public void UnBook (String name, Integer row, Integer seat, String date)throws IOException
     {
@@ -41,6 +70,18 @@ public class Booking{
 
     }
 
+    /**
+     * Намиране на резервация.
+     *
+     * @param event съдържа (името) събитието
+     * @param row съдържа резервираният ред
+     * @param seat съдържа мястото на залата
+     * @param date съдържа датата
+     * @param note съдържа името на събитието
+     * @return true-ако резервацията я има и false-ако резервацията не съществува
+     */
+
+    //da se raboti pri otvarqne
     public boolean SearchBooking(String event,String date, Integer row, Integer seat, String note) throws IOException
     {
         String line;
@@ -61,79 +102,6 @@ public class Booking{
         return false;
     }
 
-    public void ReportReservedUnpayedBookings(String date, String name)throws IOException
-    {
-        String line, line1;
-        BufferedReader readerRes, readerPurch;
-        FileReader fileReader1 = new FileReader(Constants.Bookings_FILE);
-        readerRes = new BufferedReader(fileReader1);
-        FileReader fileReader2 = new FileReader(Constants.Payments_FILE);
-        readerPurch = new BufferedReader(fileReader2);
-        while ((line = readerRes.readLine()) != null) {
-            String[] parts = line.split(" ");
-            if (parts[0].equals(name) && parts[1].equals(date) )
-            {
-                Boolean found=false;
-                while ((line1 = readerPurch.readLine()) != null) {
-                    String[] parts1 = line.split(" ");
-                    if (parts[0].equals(parts1[0]) && parts[1].equals(parts1[1]) && parts[2].equals(parts1[2])
-                        && parts[3].equals(parts1[3])) found=true;
-                }
-                if (!found) System.out.println(line);
-            }
-        }
-        readerRes.close();
-        readerPurch.close();
-    }
-
-    public void ReportReservedUnpayedBookings(String param)throws IOException
-    {
-        SimpleDateFormat sdfrmt = new SimpleDateFormat("dd/MM/yyyy");
-        boolean validDate;
-        sdfrmt.setLenient(false);
-        try {
-            Date javaDate = sdfrmt.parse(param);
-            validDate=true;
-        }
-        catch(ParseException e)
-        {
-          //  System.out.println(strDate+" is Invalid Date format");
-            validDate=false;
-        }
-
-        String line, line1;
-        BufferedReader readerRes, readerPurch;
-        FileReader fileReader1 = new FileReader(Constants.Bookings_FILE);
-        readerRes = new BufferedReader(fileReader1);
-        FileReader fileReader2 = new FileReader(Constants.Payments_FILE);
-        readerPurch = new BufferedReader(fileReader2);
-        while ((line = readerRes.readLine()) != null) {
-            String[] parts = line.split(" ");
-            if (validDate) {
-                if (parts[1].equals(param)) {
-                    Boolean found = false;
-                    while ((line1 = readerPurch.readLine()) != null) {
-                        String[] parts1 = line.split(" ");
-                        if (parts[0].equals(parts1[0]) && parts[1].equals(parts1[1]) && parts[2].equals(parts1[2])
-                                && parts[3].equals(parts1[3])) found = true;
-                    }
-                    if (!found) System.out.println(line);
-                }
-            }
-            else if (parts[0].equals(param) )
-            {
-                Boolean found=false;
-                while ((line1 = readerPurch.readLine()) != null) {
-                    String[] parts1 = line.split(" ");
-                    if (parts[0].equals(parts1[0]) && parts[1].equals(parts1[1]) && parts[2].equals(parts1[2])
-                            && parts[3].equals(parts1[3])) found=true;
-                }
-                if (!found) System.out.println(line);
-            }
-        }
-        readerRes.close();
-        readerPurch.close();
-    }
 
 
 }

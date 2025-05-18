@@ -1,5 +1,14 @@
 import java.io.*;
 
+/**
+ * Класът FileHandler съдържа методи за работа с файлове.
+ *
+ *
+ * @author Георги Жечев
+ * @version 1.0
+ * @since 2025-05-05
+ */
+
 public class FileHandler {
 
     private BufferedReader reader;
@@ -7,25 +16,49 @@ public class FileHandler {
     private FileWriter fileWriter;
     private FileReader fileReader;
 
-    // Отваряне на файл за четене
+    /**
+     * Отваряне на файл за четене.
+     *
+     * @param fileName име на файл
+     * @return няма
+     */
+
     public void openForRead(String fileName) throws IOException {
         fileReader = new FileReader(fileName);
         reader = new BufferedReader(fileReader);
     }
 
-    // Отваряне на файл за писане
+    /**
+     * Отваряне на файл за писане.
+     *
+     * @param fileName име на файл
+     * @return няма
+     */
+
     public void openForWrite(String fileName) throws IOException {
         fileWriter = new FileWriter(fileName);
         writer = new BufferedWriter(fileWriter);
     }
 
-    // Отваряне на файл за добавяне на текст
+    /**
+     * Отваряне на файл за добавяне на текст.
+     *
+     * @param fileName име на файл
+     * @return няма
+     */
+
     public void openForAppend(String fileName) throws IOException {
         fileWriter = new FileWriter(fileName, true); // true задава добавяне
         writer = new BufferedWriter(fileWriter);
     }
 
-    // Запис в отворен за писане файл
+    /**
+     * Запис в отворен за писане файл.
+     *
+     * @param text съдържание на файл
+     * @return няма
+     */
+
     public void write(String text) throws IOException {
         if (writer != null) {
             writer.write(text);
@@ -34,14 +67,27 @@ public class FileHandler {
         }
     }
 
-    // Запис в нов файл (презаписва текущото съдържание)
+    /**
+     * Запис в нов файл (презаписва текущото съдържание).
+     *
+     * @param fileName име на файл
+     * @param text съдържание на файл
+     * @return няма
+     */
+
     public void writeToNewFile(String fileName, String text) throws IOException {
         openForWrite(fileName);
         write(text);
         close();
     }
 
-    // Прочитане на съдържанието на файл
+    /**
+     * Прочитане на съдържанието на файл.
+     *
+     * @return няма
+     */
+
+    //
     public String read() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         String line;
@@ -51,14 +97,26 @@ public class FileHandler {
         return stringBuilder.toString();
     }
 
-    // Добавяне на текст в края на съществуващ файл
+    /**
+     * Добавяне на текст в края на съществуващ файл.
+     *
+     * @param fileName име на файла
+     * @param text съдържание на файла
+     * @return няма
+     */
+
     public void append(String fileName, String text) throws IOException {
         openForAppend(fileName);
         write(text);
         close();
     }
 
-    // Затваряне на отворените файлови потоци
+    /**
+     * Затваряне на отворените файлови потоци.
+     *
+     * @return няма
+     */
+
     public void close() throws IOException {
         if (reader != null) {
             reader.close();
@@ -67,6 +125,14 @@ public class FileHandler {
             writer.close();
         }
     }
+
+    /**
+     * Записване на файл под друго име.
+     *
+     * @param OldFileName предишното име на файла
+     * @param NewFileName новото име на файла
+     * @return няма
+     */
 
     public void FileSaveAs(String OldFileName, String NewFileName) throws IOException{
         openForRead(OldFileName);
@@ -80,7 +146,14 @@ public class FileHandler {
         writer.close();
     }
 
-    //преименуване на файл
+    /**
+     * Записване на файл под друго име.
+     *
+     * @param OldName предишното име на файла
+     * @param NewName новото име на файла
+     * @return няма
+     */
+
     public void FileRename(String OldName, String NewName) {
         File file = new File(OldName);
         File rename = new File(NewName);
@@ -95,6 +168,13 @@ public class FileHandler {
             System.out.println("Operation Failed");
         }*/
     }
+
+    /**
+     * Записване на файл под друго име.
+     *
+     * @param FileName име на файла
+     * @return няма
+     */
 
     //изтриване на файл
     public void DeleteFile (String FileName) throws IOException

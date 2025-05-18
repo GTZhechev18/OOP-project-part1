@@ -2,7 +2,23 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Класът събитие включва методи за реализирне на събития, например номера на залата, датата на провеждане и др.
+ *
+ * @author Георги Жечев
+ * @version 1.0
+ * @since 2025-05-04
+ */
+
 public class Event{
+
+    /**
+     * Търси събитие.
+     *
+     * @param date съдържа датата
+     * @param hall съдържа залата
+     * @return true-ако събитието го има и false-ако събитието не съществува
+     */
 
     // търсене дали на дата date в зала hall вече има събитие
     Boolean SearchEvent(String date, Integer hall) throws IOException
@@ -23,6 +39,15 @@ public class Event{
         }
         return false;
     }
+
+    /**
+     * Добавя ново събитие.
+     *
+     * @param date съдържа датата
+     * @param hall съдържа залата
+     * @param event съдържа името на събитието
+     * @return няма
+     */
 
     //добавяне на събитие 
     void AddEvent(String date, Integer hall, String event)throws IOException

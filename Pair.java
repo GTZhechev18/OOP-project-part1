@@ -1,3 +1,12 @@
+/**
+ * Класът Pair връща ред и място на събитието
+ *
+ *
+ * @author Георги Жечев
+ * @version 1.0
+ * @since 2025-05-05
+ */
+
 public class Pair<K, V> {
     private K key;
     private V value;

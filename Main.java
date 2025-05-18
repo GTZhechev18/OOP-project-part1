@@ -1,9 +1,19 @@
+import java.text.ParseException;
 import java.util.Scanner; // To get input from keyboard
 import java.io.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+
+/**
+ * Класът Main класът за главна страница
+ *
+ *
+ * @author Георги Жечев
+ * @version 1.0
+ * @since 2025-05-05
+ */
 
 public class Main {
     public static void main(String[] args) {
@@ -12,40 +22,42 @@ public class Main {
 
     private static final int EXIT = 99;
 
+    /**
+     * Повторение на менюто до използване командата за край на цикъл.
+     *
+     * @return след изпълняване на цикъла извежда край на програмата
+     */
+
     private static void menuLoop() {
         int action = getMenuChoice();
         while (action != EXIT) {
-            dispatch(action);
+            switch (action) {
+                case 1: try {
+                    displayHallsMenu();
+                }
+                catch (IOException е) {
+                    System.out.println("Грешка");}
+                    break;
+                case 2: try {
+                    displayEventsMenu();
+                }
+                catch (IOException е) {
+                    System.out.println("Грешка");}
+                    break;
+                case 3: try {
+                    displayReservationsMenu();
+                }
+                catch (IOException е) {
+                    System.out.println("Грешка");}
+                    break;
+                case 4: displayPurchaseMenu(); break;
+                case 5: displayReportMenu(); break;
+                }
             action = getMenuChoice();
         }
         System.out.println("Край на програмата!");
     }
 
-    private static void dispatch(int action) {
-        switch (action) {
-            case 1: try {
-                displayHallsMenu();
-            }
-            catch (IOException е) {
-                System.out.println("Грешка");}
-                break;
-            case 2: try {
-                displayEventsMenu();
-            }
-            catch (IOException е) {
-                System.out.println("Грешка");}
-                break;
-            case 3: try {
-                displayReservationsMenu();
-            }
-            catch (IOException е) {
-                System.out.println("Грешка");}
-                break;
-            case 4: displayPurchaseMenu(); break;
-            case 5: displayReportMenu(); break;
-            //case 6: return;
-        }
-    }
 
     private static int getMenuChoice() {
         int choice = EXIT;
@@ -69,10 +81,9 @@ public class Main {
             System.out.println("Моля изберете една от следните възможности за зали");
             System.out.println("1. Отваряне");
             System.out.println("2. Затваряне");
-            System.out.println("3. Запазване");
-            System.out.println("4. Запазване като");
-            System.out.println("5. Помощ");
-            System.out.println("6. Изход");
+            System.out.println("3. Запазване като");
+            System.out.println("4. Помощ");
+            System.out.println("5. Изход");
             System.out.print("Вашият избор:");
             Scanner myObj = new Scanner(System.in);
             ch = myObj.nextInt();
@@ -95,39 +106,48 @@ public class Main {
                 case 2:  fileHandler.close();
                     System.out.println("Файлът е затворен!");
                          break;
-                case 3:
-                case 4: myObj = new Scanner(System.in);
+                case 3: myObj = new Scanner(System.in);
                         System.out.print("Въведете ново име на файла:");
                         String newName = myObj.nextLine();
                         fileHandler.FileSaveAs(Constants.Halls_FILE,newName);
                         break;
-                case 5: ShowHelp (); break;
+                case 4: ShowHelp (); break;
                 default: System.out.println("Грешен избор");
-            }  //while (ch!=6);
+            }  //while (ch!=5);
 
-            //if (ch==6) choice=EXIT;
-        }while (ch!=6);
+            //if (ch==5) choice=EXIT;
+        }while (ch!=5);
     }
+
+    /**
+     * Помощно меню.
+     *
+     * @return няма
+     */
 
     private static void ShowHelp()
     {
         System.out.println("Опция 1. Отваря файл и извежда съдържанието му на екрана");
         System.out.println("Опция 2. Затваря файл");
-        System.out.println("Опция 4. Прави копие с ново име");
-        System.out.println("Опция 5. Помощ");
+        System.out.println("Опция 3. Прави копие с ново име");
+        System.out.println("Опция 4. Помощ");
         System.out.println("Изход към главно ниво");
     }
+    /**
+     * DisplayEvents меню.
+     *
+     * @return няма
+     */
     private static void displayEventsMenu() throws IOException{
         int ch=0;
         do {
             System.out.println("Моля изберете една от следните възможности за представления");
             System.out.println("1. Отваряне");
             System.out.println("2. Затваряне");
-            System.out.println("3. Запазване");
-            System.out.println("4. Запазване като");
-            System.out.println("5. Добавяне на ново събитие");
-            System.out.println("6. Помощ");
-            System.out.println("7. Изход");
+            System.out.println("3. Запазване като");
+            System.out.println("4. Добавяне на ново събитие");
+            System.out.println("5. Помощ");
+            System.out.println("6. Изход");
             Scanner myObj = new Scanner(System.in);
             ch = myObj.nextInt();
             FileHandler fileHandler = new FileHandler();
@@ -195,6 +215,12 @@ public class Main {
             }
         }while (ch!=7);
     }
+
+    /**
+     * displayReservationsMenu меню.
+     *
+     * @return няма
+     */
 
     private static void displayReservationsMenu()throws IOException {
         int ch=0;
@@ -306,7 +332,11 @@ public class Main {
             while (ch != 7) ;
         }
 
-
+    /**
+     * displayPurchaseMenu меню.
+     *
+     * @return няма
+     */
 
     private static void displayPurchaseMenu() {
         int ch = 0;
@@ -390,6 +420,12 @@ public class Main {
         while(ch!=7);
     }
 
+    /**
+     * displayReportMenu меню.
+     *
+     * @return няма
+     */
+
     private static void displayReportMenu() {
         int ch = 0;
         do {
@@ -438,11 +474,11 @@ public class Main {
                     }
                 case 3:
                     try{
-                        Booking b=new Booking();
+                        Report b=new Report();
                         myObj = new Scanner(System.in);
                         System.out.print("Въведете име на събитие:");
                         String event = myObj.nextLine();
-                        System.out.print("Въведете дата на събитие:");
+                        System.out.print("Въведете дата на събитие (или празно, ако не желаете):");
                         String date = myObj.nextLine();
                         if (date.equals("") ) b.ReportReservedUnpayedBookings(event);
                         else if (event.equals("")) b.ReportReservedUnpayedBookings(date);
@@ -453,10 +489,36 @@ public class Main {
                         //e.printStackTrace();
                         System.out.println("Грешка");
                     }
+                    break;
+                case 4:
+                    try{
+                        Report b=new Report();
+                        myObj = new Scanner(System.in);
+                        System.out.print("Въведете начална дата:");
+                        String date1 = myObj.nextLine();
+                        System.out.print("Въведете крайна дата:");
+                        String date2 = myObj.nextLine();
+                        System.out.print("Въведете зала или 0 ако не желаете:");
+                        Integer hall = myObj.nextInt();
+                        if (hall==0) b.ReportPurchasedTickets(date1, date2);
+                            else b.ReportPurchasedTickets(date1, date2, hall);
 
+                        break;
+                    } catch (IOException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка във файловете");
+                    }catch (ParseException е) {
+                        //e.printStackTrace();
+                        System.out.println("Грешка в данните");
+                    }
+                    break;
+                case 5: ShowHelp();
+                    break;
+                default:
+                    System.out.println("Грешен избор");
             }
 
-        } while (ch != 7) ;
+        } while (ch != 6) ;
 
     }
 }
